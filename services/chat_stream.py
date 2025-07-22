@@ -1,6 +1,6 @@
 from backend.services.llm import chat_chain
 
-async def stream_chat(username: str, question: str):
+async def streaming_chat(username: str, question: str):
     response_stream = chat_chain.stream(
         {"question": question},
          config={"configurable": {"session_id": username}}

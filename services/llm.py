@@ -1,3 +1,5 @@
+import os
+
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnableWithMessageHistory
@@ -6,7 +8,7 @@ from backend.services.history import get_session_history
 from backend.services.prompts import *
 
 llm = ChatOpenAI(
-    api_key="",
+    api_key= os.getenv("OPENAI_API_KEY"),
     streaming=True,
     temperature=0.7,
     model="gpt-4o-mini",
@@ -20,7 +22,7 @@ prompt = ChatPromptTemplate.from_messages([
 
 chain: Runnable = prompt | llm
 
-chat_chain: RunnableWithMessageHistory(
+chat_chain = RunnableWithMessageHistory(
     chain,
     get_session_history,
     input_message_key="question",
