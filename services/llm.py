@@ -2,6 +2,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnableWithMessageHistory
 from langchain_core.runnables import Runnable
+from backend.services.history import get_session_history
 from backend.services.prompts import *
 
 llm = ChatOpenAI(
@@ -21,7 +22,7 @@ chain: Runnable = prompt | llm
 
 chat_chain: RunnableWithMessageHistory(
     chain,
-
+    get_session_history,
     input_message_key="question",
-    history_message_key="history",
+    history_message_key="history"
 )
