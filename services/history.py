@@ -5,7 +5,7 @@ from langchain_core.messages import HumanMessage, AIMessage, BaseMessage
 CHATS_DIR = "backend/chats"
 
 def _get_path(session_id: str):
-    os.makedirs(CHATS_DIR, f"{session_id}.json")
+    os.makedirs(CHATS_DIR, exist_ok=True)
     return os.path.join(CHATS_DIR, f"{session_id}.json")
 
 class ChatHistory:
@@ -20,8 +20,8 @@ class ChatHistory:
         with open(self.path, "r") as f:
             data = json.load(f)
             return [
-                HumanMessage(content=m["content"] if m["role"] == "user"
-                else AIMessage(content=m["content"]))
+                HumanMessage(content=m["content"]) if m["role"] == "user"
+                else AIMessage(content=m["content"])
                 for m in data
             ]
 
@@ -43,6 +43,16 @@ class ChatHistory:
         return self.messages
 
     def get_history(self):
+        if not os.path.isfile(self.path):
+            return []
+
+        with open(self.path, "r") as f:
+            data = json.load(f)
+            return []
+
+
+    def get_chats(self):
+
         if not os.path.isfile(self.path):
             return []
 

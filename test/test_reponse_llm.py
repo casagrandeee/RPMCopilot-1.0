@@ -6,7 +6,7 @@ while True:
     question: str = input("(you) : ")
 
     response = requests.post(
-        "http://localhost:8000/api/v1/agent/straming-chat",
+        "http://localhost:8000/api/v1/agent/stream-chat",
         json={
             "name": username,
             "question": question
